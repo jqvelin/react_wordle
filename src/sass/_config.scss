@@ -1,0 +1,59 @@
+@mixin center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin fullscreen {
+    width: 100vw;
+    height: 100vh;
+}
+
+@mixin full-content {
+    width: 100%;
+    height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+$primary-color: black;
+$letter-box-size: 100px;
+$letter-box-mobile-size: 64px;
+$letter-box-font-size: 3rem;
+$letter-box-mobile-font-size: 1.5rem;
+$unknown-letter-color: #373737;
+$guessed-letter-color: #F4BB44;
+$correct-letter-color: #008000;
+
+$light-background-texture: 'https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square.png';
+$dark-background-texture: 'https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square-dark.png';
+
+
+@media screen and (min-width: 1024px) {
+    
+}
+ 
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+}
+ 
+/* For Mobile Portrait View */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    
+}
+ 
+/* For Mobile Landscape View */
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+    
+}
+ 
+/* For Mobile Phones Portrait or Landscape View */
+@media screen and (max-device-width: 640px) {
+
+}

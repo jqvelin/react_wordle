@@ -1,0 +1,107 @@
+@import './config';
+@import '../index.css';
+
+body {
+    @include fullscreen;
+    @include center;
+    background-image: var(--background-texture);
+    transition: all 0.3s ease-in-out;
+}
+
+#root, .main-layout {
+    @include full-content;
+    @include center;
+}
+
+.main-layout {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+    backdrop-filter: blur(2px);
+}
+
+.title {
+    color: var(--primary-color);
+    position: relative;
+    @include center;
+    &.bottom-border{
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5em;
+            height: 1px;
+            width: 400px;
+            background-color: var(--primary-color);
+        }
+    }
+}
+
+.letter-box {
+    width: $letter-box-size;
+    aspect-ratio: 1;
+    color: white;
+    @include center;
+    text-transform: uppercase;
+    border-radius: 4px;
+    background-color: $unknown-letter-color;
+    font-size: $letter-box-font-size;
+    &.guessed {
+        background-color: $guessed-letter-color;
+    }
+    &.correct {
+        background-color: $correct-letter-color;
+    }
+}
+
+footer {
+    @include center;
+}
+
+.theme-switcher {
+    color: var(--primary-color);
+    user-select: none;
+    display: flex;
+    align-items: center;
+    width: 140px;
+    cursor: pointer;
+    p {
+        margin-right: 0.7rem;
+    }
+    .theme-switcher__controls {
+        position: relative;
+        border: 1px $unknown-letter-color solid;
+        border-radius: 2rem;
+        width: 80px;
+        height: 40px;
+        overflow: hidden;
+        right: 0;
+        .sun-icon, .moon-icon {
+            font-size: 1.5rem;
+            position: absolute;
+            transition: top 0.3s ease-in-out;
+        }
+
+        .sun-icon {
+            top: var(--sun-position);
+            left: 10%;
+            transform: translateY(-50%);
+        }
+
+        .moon-icon {
+            top: var(--moon-position);
+            right: 10%;
+            transform: translateY(-50%);
+        }
+
+        input {
+            appearance: none;
+        }
+    }
+}
+
+@media screen and (max-device-width: 640px) {
+    .letter-box {
+        width: $letter-box-mobile-size;
+        font-size: $letter-box-mobile-font-size;
+    }
+}

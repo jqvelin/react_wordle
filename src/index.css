@@ -1,0 +1,13 @@
+:root {
+    --background-texture: url('https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square.png');
+    --primary-color: black;
+    --sun-position: 50%;
+    --moon-position: 150%;
+}
+
+[data-theme="dark"]{
+    --background-texture: url('https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square-dark.png');
+    --primary-color: white;
+    --sun-position: 150%;
+    --moon-position: 50%;
+}
