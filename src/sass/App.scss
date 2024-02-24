@@ -4,7 +4,7 @@
 body {
     @include fullscreen;
     @include center;
-    background-image: var(--background-texture);
+    background-color: var(--background-color);
     transition: all 0.3s ease-in-out;
 }
 
@@ -17,7 +17,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 1em;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(1px);
 }
 
 .title {
@@ -30,7 +30,7 @@ body {
             position: absolute;
             bottom: -0.5em;
             height: 1px;
-            width: 400px;
+            width: 50vw;
             background-color: var(--primary-color);
         }
     }
@@ -44,12 +44,50 @@ body {
     text-transform: uppercase;
     border-radius: 4px;
     background-color: $unknown-letter-color;
+    border: var(--letter-box-border);
     font-size: $letter-box-font-size;
     &.guessed {
         background-color: $guessed-letter-color;
     }
     &.correct {
         background-color: $correct-letter-color;
+    }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include full-content;
+    overflow: auto;
+    background: var(--primary-color);
+    color: var(--background-color);
+    opacity: 0.6;
+    z-index: 1000;
+    @include center;
+    text-align: center;
+    .modal-content {
+        user-select: none;
+        @include center;
+        height: 50%;
+        justify-content: space-between;
+        flex-direction: column;
+        opacity: 1;
+        h2 {
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 0.5rem;
+        }
+        .letter-box-rule {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            &:not(:last-child){
+                margin-bottom: 1rem;
+            }
+        }
     }
 }
 
@@ -62,7 +100,8 @@ footer {
     user-select: none;
     display: flex;
     align-items: center;
-    width: 140px;
+    justify-content: space-between;
+    width: 130px;
     cursor: pointer;
     p {
         margin-right: 0.7rem;
@@ -94,7 +133,7 @@ footer {
         }
 
         input {
-            appearance: none;
+            visibility: hidden;
         }
     }
 }
@@ -104,4 +143,5 @@ footer {
         width: $letter-box-mobile-size;
         font-size: $letter-box-mobile-font-size;
     }
-}
+};
+

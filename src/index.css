@@ -1,13 +1,26 @@
+:root::after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    content: url(./assets/papyrus-dark.webp)
+}
+
 :root {
-    --background-texture: url('https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square.png');
+    --background-texture: url('./assets/papyrus.webp');
+    --background-color: white;
     --primary-color: black;
     --sun-position: 50%;
     --moon-position: 150%;
-}
+    --letter-box-border: none;
+};
 
 [data-theme="dark"]{
-    --background-texture: url('https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square-dark.png');
+    --background-texture: url('./assets/papyrus-dark.webp');
+    --background-color: black;
     --primary-color: white;
     --sun-position: 150%;
     --moon-position: 50%;
+    --letter-box-border: 1px rgba(0, 166, 255, 0.5) solid;
 }

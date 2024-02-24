@@ -1,19 +1,20 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { ThemeStatuses } from '../models/statuses/ThemeStatuses';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { useRef } from 'react';
 
-interface ThemeSwitcherComponentProps {
-    theme: ThemeStatuses,
-    setTheme: (nextTheme: ThemeStatuses) => void
-}
+const ThemeSwitcherComponent = () => {
+    const [theme, setTheme] = useState<ThemeStatuses>(ThemeStatuses.LIGHT)
 
-const ThemeSwitcherComponent: FC<ThemeSwitcherComponentProps> = ({theme, setTheme}) => {
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') as ThemeStatuses)
+        setTheme(localStorage.getItem('theme') as ThemeStatuses)
+    }, [])
 
     function handleChangeTheme(){
         const nextTheme = theme === ThemeStatuses.LIGHT ? ThemeStatuses.DARK : ThemeStatuses.LIGHT
         document.documentElement.setAttribute('data-theme', nextTheme)
+        localStorage.setItem('theme', nextTheme)
         setTheme(nextTheme)
     }
 

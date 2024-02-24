@@ -7,6 +7,7 @@
 @mixin fullscreen {
     width: 100vw;
     height: 100vh;
+    max-height: 100svh;
 }
 
 @mixin full-content {
@@ -16,7 +17,7 @@
 
 * {
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
