@@ -24,14 +24,15 @@
 
 
 $primary-color: black;
-$letter-box-size: 100px;
-$letter-box-mobile-size: 64px;
+$letter-box-size: 86px;
+$letter-box-mobile-size: 56px;
 $letter-box-font-size: 3rem;
 $letter-box-mobile-font-size: 1.5rem;
 $unknown-letter-color: #373737;
 $guessed-letter-color: #F4BB44;
 $correct-letter-color: #008000;
-
+$selected-border: 2px rgba(0, 255, 89, 0.5) solid;
+$button-color: rgba(52, 183, 74, 1);
 $light-background-texture: 'https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square.png';
 $dark-background-texture: 'https://www.toptal.com/designers/subtlepatterns/uploads/repeated-square-dark.png';
 
@@ -46,11 +47,6 @@ $dark-background-texture: 'https://www.toptal.com/designers/subtlepatterns/uploa
  
 /* For Mobile Portrait View */
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
-    
-}
- 
-/* For Mobile Landscape View */
-@media screen and (max-device-width: 640px) and (orientation: landscape) {
     
 }
  

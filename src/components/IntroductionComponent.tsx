@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import DifficultySelectorComponent from './DifficultySelectorComponent';
 
-const IntroductionComponent = () => {
+interface IntroductionComponentProps {
+    difficulty: number
+    handleGameStart: () => void
+    setDifficulty: (nextDifficulty: number) => void
+}
+
+const IntroductionComponent: FC<IntroductionComponentProps> = ({handleGameStart, setDifficulty, difficulty}) => {
+
+    useEffect(() => {
+        setDifficulty(Number(localStorage.getItem('difficulty')))
+    }, [])
+
     return (
         <div className="modal">
             <div className="modal-content">
@@ -24,9 +36,9 @@ const IntroductionComponent = () => {
                     </div>
                     <p>- буква угадана верно!</p>
                 </div>
-                <div className="select-difficulty">
-                    <p>Для начала игры выберите сложность:</p>
-                </div>
+                <p>Для начала игры выберите сложность:</p>
+                <DifficultySelectorComponent difficulty={difficulty} setDifficulty={setDifficulty} />
+                <button onClick={() => handleGameStart()}>Играть</button>
             </div>
         </div>
     );

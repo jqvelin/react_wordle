@@ -1,16 +1,7 @@
-:root::after {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    z-index: -1;
-    content: url(./assets/papyrus-dark.webp)
-}
-
 :root {
     --background-texture: url('./assets/papyrus.webp');
-    --background-color: white;
-    --primary-color: black;
+    --background-color: 255, 255, 255;
+    --primary-color: 0, 0, 0;
     --sun-position: 50%;
     --moon-position: 150%;
     --letter-box-border: none;
@@ -18,8 +9,8 @@
 
 [data-theme="dark"]{
     --background-texture: url('./assets/papyrus-dark.webp');
-    --background-color: black;
-    --primary-color: white;
+    --background-color: 0, 0, 0;
+    --primary-color: 255, 255, 255;
     --sun-position: 150%;
     --moon-position: 50%;
     --letter-box-border: 1px rgba(0, 166, 255, 0.5) solid;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 
 interface TitleComponentProps {
     title: string
@@ -13,4 +13,4 @@ const TitleComponent: FC<TitleComponentProps> = ({title, bottomBorder}) => {
     );
 };
 
-export default TitleComponent;
+export default memo(TitleComponent);

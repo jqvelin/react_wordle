@@ -4,8 +4,9 @@
 body {
     @include fullscreen;
     @include center;
-    background-color: var(--background-color);
-    transition: all 0.3s ease-in-out;
+    user-select: none;
+    background-color: rgba(var(--background-color));
+    transition: background-color 0.3s ease-in-out;
 }
 
 #root, .main-layout {
@@ -21,7 +22,7 @@ body {
 }
 
 .title {
-    color: var(--primary-color);
+    color: rgba(var(--primary-color));
     position: relative;
     @include center;
     &.bottom-border{
@@ -31,12 +32,13 @@ body {
             bottom: -0.5em;
             height: 1px;
             width: 50vw;
-            background-color: var(--primary-color);
+            background-color: rgba(var(--primary-color));
         }
     }
 }
 
 .letter-box {
+    transition: background-color 0.3s ease-in-out;
     width: $letter-box-size;
     aspect-ratio: 1;
     color: white;
@@ -60,19 +62,16 @@ body {
     left: 0;
     @include full-content;
     overflow: auto;
-    background: var(--primary-color);
-    color: var(--background-color);
-    opacity: 0.6;
+    background: rgba(var(--primary-color), 0.95);
+    color: rgba(var(--background-color));
     z-index: 1000;
     @include center;
     text-align: center;
     .modal-content {
-        user-select: none;
         @include center;
-        height: 50%;
+        flex-shrink: 1;
         justify-content: space-between;
         flex-direction: column;
-        opacity: 1;
         h2 {
             margin-bottom: 1rem;
         }
@@ -84,20 +83,64 @@ body {
             align-items: center;
             justify-content: space-between;
             width: 80%;
-            &:not(:last-child){
-                margin-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        button {
+            cursor: pointer;
+            color: white;
+            padding: 0.5rem 1rem;
+            background: $button-color;
+            border: 1px rgba(var(--background-color)) solid;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+    }
+}
+
+.select-difficulty {
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 180px;
+        div {
+            cursor: pointer;
+            width: 3rem;
+            aspect-ratio: 1;
+            color: white;
+            @include center;
+            text-transform: uppercase;
+            border-radius: 4px;
+            background-color: $unknown-letter-color;
+            border: var(--letter-box-border);
+            font-size: 2rem;
+            &.selected {
+                border: $selected-border;
             }
         }
     }
 }
 
+main {
+    @include center;
+    display: grid;
+    &, & .letter-boxes-row {
+        gap: 4px;
+    }
+    .letter-boxes-row {
+        display: flex;
+    }
+}
+
 footer {
     @include center;
+    justify-content: space-between;
+    height: 10vh;
+    width: 90vw;
 }
 
 .theme-switcher {
-    color: var(--primary-color);
-    user-select: none;
+    color: rgba(var(--primary-color));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -145,3 +188,9 @@ footer {
     }
 };
 
+/* For Mobile Landscape View */
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+    .modal-content {
+        height: 100%;
+    }
+}
