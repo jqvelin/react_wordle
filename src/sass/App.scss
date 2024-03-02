@@ -17,7 +17,7 @@ body {
 .main-layout {
     flex-direction: column;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.5em;
 }
 
 .title {
@@ -127,8 +127,32 @@ body {
 
 main {
     @include center;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 4px;
+}
+
+.virtual-keyboard {
+    @include center;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 24px;
+    .special {
+        width: $virtual-keyboard-special-char-width;
+        height: 28px;
+        font-size: 1.2em;
+    }
+    &__row {
+        @include center;
+        gap: 2px;
+    }
+    &__button {
+        @include center;
+        color: white;
+        width: $virtual-keyboard-button-size;
+        aspect-ratio: 1;
+        background: $unknown-letter-color;
+    }
 }
 
 .letter-boxes-row {
@@ -186,9 +210,19 @@ footer {
 }
 
 @media screen and (max-device-width: 640px) {
+    .title {
+        font-size: 24px;
+    }
     .letter-box {
         width: $letter-box-mobile-size;
         font-size: $letter-box-mobile-font-size;
+    }
+    main {
+        gap: 2px;
+    }
+
+    .letter-boxes-row {
+        gap: 2px;
     }
 };
 

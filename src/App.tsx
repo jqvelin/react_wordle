@@ -8,8 +8,7 @@ import FooterComponent from './components/FooterComponent';
 import DifficultySelectorComponent from './components/DifficultySelectorComponent';
 import MainGameComponent from './components/MainGameComponent';
 import { MainGameBoard } from './models/MainGameBoard';
-import GameWonMessageComponent from './components/GameWonMessageComponent';
-import GameOutcomeComponent from './components/GameWonMessageComponent';
+import GameOutcomeComponent from './components/GameOutcomeComponent';
 
 const App = () => {
   const [gameStatus, setGameStatus] = useState<GameStatuses>(GameStatuses.FIRST_LAUNCH)

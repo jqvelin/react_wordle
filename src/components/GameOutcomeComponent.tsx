@@ -23,7 +23,7 @@ const GameOutcomeComponent: FC<GameOutcomeComponentProps> = ({gameBoard, gameSta
                 <h2>{gameStatus === GameStatuses.GAME_WON ? 'Вы угадали слово!' : 'Игра окончена!'}</h2>
                 <div className="letter-boxes-row">
                     {gameBoard.riddledWord.split('').map(
-                        letter => <LetterBoxComponent letter={letter} status={gameStatus === GameStatuses.GAME_WON ? LetterBoxStatuses.CORRECT : LetterBoxStatuses.UNKNOWN}/>
+                        (letter, index) => <LetterBoxComponent key={index} letter={letter} status={gameStatus === GameStatuses.GAME_WON ? LetterBoxStatuses.CORRECT : LetterBoxStatuses.UNKNOWN}/>
                     )}
                 </div>
                 <button onClick={playAgain}>Новая игра</button>
