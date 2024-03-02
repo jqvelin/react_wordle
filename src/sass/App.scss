@@ -18,7 +18,6 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 1em;
-    backdrop-filter: blur(1px);
 }
 
 .title {
@@ -29,7 +28,7 @@ body {
         &::after {
             content: '';
             position: absolute;
-            bottom: -0.5em;
+            bottom: calc(-5px);
             height: 1px;
             width: 50vw;
             background-color: rgba(var(--primary-color));
@@ -45,9 +44,14 @@ body {
     @include center;
     text-transform: uppercase;
     border-radius: 4px;
-    background-color: $unknown-letter-color;
     border: var(--letter-box-border);
     font-size: $letter-box-font-size;
+    &.unknown {
+        background-color: $unknown-letter-color;
+    }
+    &.wrong {
+        background-color: $wrong-letter-color;
+    }
     &.guessed {
         background-color: $guessed-letter-color;
     }
@@ -124,12 +128,12 @@ body {
 main {
     @include center;
     display: grid;
-    &, & .letter-boxes-row {
-        gap: 4px;
-    }
-    .letter-boxes-row {
-        display: flex;
-    }
+    gap: 4px;
+}
+
+.letter-boxes-row {
+    display: flex;
+    gap: 4px;
 }
 
 footer {

@@ -1,5 +1,6 @@
 export enum LetterBoxStatuses {
-    UNKNOWN="",
+    UNKNOWN="unknown",
+    WRONG="wrong",
     GUESSED="guessed",
     CORRECT="correct"
 }

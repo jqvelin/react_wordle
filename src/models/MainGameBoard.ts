@@ -1,11 +1,14 @@
 import { LetterBox } from "./LetterBox"
+import { allowedKeys } from "./db/AllowedKeys"
 import { fiveLetterWords, fourLetterWords, sixLetterWords } from "./db/WordsDB"
+import { LetterBoxStatuses } from "./statuses/LetterBoxStatuses"
 
 export class MainGameBoard {
     letterBoxQty: number
     letterBoxes: LetterBox[][] = []
     words: string[] = []
     riddledWord: string = ''
+    allowedKeys: string[] = allowedKeys
     constructor(letterBoxQty: number){
         this.letterBoxQty = letterBoxQty
         switch(letterBoxQty){
@@ -32,9 +35,21 @@ export class MainGameBoard {
     }
 
     riddleWord(){
-        if (this.riddledWord.length !== 0) return
-        this.riddledWord = this.words[Math.floor(Math.random() * this.words.length - 1)]
+        this.riddledWord = this.words[Math.floor(Math.random() * (this.words.length - 1))]
         console.log(this.riddledWord)
+    }
+
+    isAllowedLetter(letter: string) {
+        if (allowedKeys.includes(letter)) return true
+        return false
+    }
+
+    getAllIndices(neededValue: any) {
+        let indices = [], i = -1;
+        while ((i = this.riddledWord.split('').indexOf(neededValue, i+1)) != -1){
+            indices.push(i);
+        }
+        return indices;
     }
 
     getLetterBox(x: number, y: number){

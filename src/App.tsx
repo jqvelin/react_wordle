@@ -8,12 +8,14 @@ import FooterComponent from './components/FooterComponent';
 import DifficultySelectorComponent from './components/DifficultySelectorComponent';
 import MainGameComponent from './components/MainGameComponent';
 import { MainGameBoard } from './models/MainGameBoard';
+import GameWonMessageComponent from './components/GameWonMessageComponent';
+import GameOutcomeComponent from './components/GameWonMessageComponent';
 
 const App = () => {
   const [gameStatus, setGameStatus] = useState<GameStatuses>(GameStatuses.FIRST_LAUNCH)
   const [difficulty, setDifficulty] = useState(4)
   const [gameBoard, setGameBoard] = useState<MainGameBoard>(new MainGameBoard(difficulty))
-  
+
   useEffect(() => {
     restartGame()
   }, [difficulty])
@@ -22,7 +24,6 @@ const App = () => {
     const nextGameBoard = new MainGameBoard(difficulty)
     nextGameBoard.initLetterBoxes()
     nextGameBoard.riddleWord()
-    console.log(`MainEnd: ${nextGameBoard.riddledWord}`)
     setGameBoard(nextGameBoard)
 }
 
@@ -34,7 +35,8 @@ const App = () => {
     <div className="main-layout">
       <TitleComponent title="Wordle" bottomBorder/>
       {gameStatus === GameStatuses.FIRST_LAUNCH && <IntroductionComponent handleGameStart={handleGameStart} difficulty={difficulty} setDifficulty={setDifficulty}/>}
-      {gameStatus === GameStatuses.GAME_RUNNING && <MainGameComponent gameBoard={gameBoard} setGameBoard={setGameBoard} />}
+      {gameStatus === GameStatuses.GAME_RUNNING && <MainGameComponent gameBoard={gameBoard} setGameBoard={setGameBoard} setGameStatus={setGameStatus}/>}
+      {(gameStatus === GameStatuses.GAME_WON || gameStatus === GameStatuses.GAME_LOST) && <GameOutcomeComponent gameBoard={gameBoard} gameStatus={gameStatus} restartGame={restartGame} setGameStatus={setGameStatus}/>}
       <FooterComponent>
         <DifficultySelectorComponent difficulty={difficulty} setDifficulty={setDifficulty}/>
         <ThemeSwitcherComponent/>

@@ -1,15 +1,16 @@
 import React, { FC, useEffect, useRef} from 'react';
 import { MainGameBoard } from '../models/MainGameBoard';
 import LetterBoxComponent from './LetterBoxComponent';
-import { allowedKeys } from '../models/db/AllowedKeys';
 import { LetterBoxStatuses } from '../models/statuses/LetterBoxStatuses';
+import { GameStatuses } from '../models/statuses/GameStatuses';
 
 interface MainGameComponentProps {
-    gameBoard: MainGameBoard,
+    gameBoard: MainGameBoard
     setGameBoard: (nextBoard: MainGameBoard) => void
+    setGameStatus: (nextStatus: GameStatuses) => void
 }
 
-const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard}) => {
+const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard, setGameStatus}) => {
     const currentLetter = useRef(0)
     const currentWord = useRef(0)
 
@@ -19,34 +20,30 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard}
     }, [gameBoard.riddledWord.length])
     
     useEffect(() => {
-        document.addEventListener('keydown', handleKeyPress)
-    }, [])
+        document.addEventListener('keydown', handleKeyDown)
+        return () => document.removeEventListener('keydown', handleKeyDown)
+    })
 
     function updateBoard(){
         const nextBoard = gameBoard.getBoardCopy()
         setGameBoard(nextBoard)
     }
 
-    function isAllowedLetter(letter: string) {
-        if (allowedKeys.includes(letter)) return true
-        return false
-    }
-
-    function handleKeyPress(e: globalThis.KeyboardEvent){
+    function handleKeyDown(e: globalThis.KeyboardEvent){
         const inputLetter = e.key.toUpperCase()
         if(inputLetter === 'BACKSPACE'){
             if (currentLetter.current - 1 < 0) return
             const letterBox = gameBoard.getLetterBox(currentLetter.current - 1, currentWord.current)
             letterBox.letter = null
             currentLetter.current--
-        } else if (inputLetter !== 'ENTER' && isAllowedLetter(inputLetter)){
+        } else if (inputLetter !== 'ENTER' && gameBoard.isAllowedLetter(inputLetter)){
             if (currentLetter.current >= gameBoard.riddledWord.length) return
             const letterBox = gameBoard.getLetterBox(currentLetter.current, currentWord.current)
             letterBox.letter = inputLetter
             currentLetter.current++
         } else if (inputLetter === 'ENTER'){
             if (currentLetter.current !== gameBoard.riddledWord.length) return
-            calculateResult(gameBoard.riddledWord)
+            calculateResult(currentWord.current)
             currentWord.current++
             currentLetter.current = 0
         }
@@ -54,38 +51,31 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard}
         updateBoard()
     }
 
-    function calculateResult(answer: string){
-        for (let x = 0; x < answer.length; x++){
-            const currentLetterBox = gameBoard.getLetterBox(x, currentWord.current)
-            const matchesIndices = getAllIndices(answer.split(''), currentLetterBox.letter)
-            if (matchesIndices.length === 0) return
-            let matchesCounter = 0
-            
-            matchesIndices.forEach(index => {
-                if (matchesCounter === matchesIndices.length) return
-                if (x === index) {
-                    currentLetterBox.status = LetterBoxStatuses.CORRECT
-                } else if (matchesIndices.length > matchesCounter){
-                    currentLetterBox.status = LetterBoxStatuses.GUESSED
-                }
-                matchesCounter++
-            })
+    
+    function calculateResult(currentWord: number){
+        for (let x = 0; x < gameBoard.riddledWord.length; x++){
+            const currentLetterBox = gameBoard.getLetterBox(x, currentWord)
+            const currentRiddledWordLetters = gameBoard.riddledWord.split('')
+            if (currentLetterBox.letter === currentRiddledWordLetters[x]){
+                currentLetterBox.status = LetterBoxStatuses.CORRECT
+            } else if (currentRiddledWordLetters.find(letter => letter === currentLetterBox.letter)){
+                currentLetterBox.status = LetterBoxStatuses.GUESSED
+            } else {
+                currentLetterBox.status = LetterBoxStatuses.WRONG
+            }
         }
-    }
-
-    function getAllIndices(arr: any[], val: any) {
-        let indices = [], i = -1;
-        while ((i = arr.indexOf(val, i+1)) != -1){
-            indices.push(i);
+        if (gameBoard.letterBoxes[currentWord].filter(letterBox => letterBox.status === LetterBoxStatuses.CORRECT).length === gameBoard.riddledWord.length){
+            setGameStatus(GameStatuses.GAME_WON)
+        } else if (currentWord === 5){
+            setGameStatus(GameStatuses.GAME_LOST)
         }
-        return indices;
     }
 
     return (
         <>
         <main>
             {gameBoard.letterBoxes.map(row => 
-                <div key={gameBoard.letterBoxes.indexOf(row)} className="letter-boxes-row">
+                <div className="letter-boxes-row">
                     {row.map(letterBox =>
                         <LetterBoxComponent key={letterBox.y === 0 ? letterBox.x : Number(`${letterBox.y}${letterBox.x}`)} letter={letterBox.letter} status={letterBox.status}/>
                     )}

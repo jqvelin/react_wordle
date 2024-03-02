@@ -19,7 +19,7 @@ const IntroductionComponent: FC<IntroductionComponentProps> = ({handleGameStart,
                 <h2>Добро пожаловать в Wordle!</h2>
                 <p>В этой игре Вам предстоит отгадать слово по буквам, исходя из следующих подсказок:</p>
                 <div className="letter-box-rule">
-                    <div className="letter-box">
+                    <div className="letter-box wrong">
                         A
                     </div>
                     <p>- буквы нет в загаданном слове</p>
