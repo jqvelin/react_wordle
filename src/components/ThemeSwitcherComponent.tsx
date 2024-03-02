@@ -7,6 +7,7 @@ const ThemeSwitcherComponent = () => {
     const [theme, setTheme] = useState<ThemeStatuses>(ThemeStatuses.LIGHT)
 
     useEffect(() => {
+        if(!localStorage.getItem('theme')) return
         document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') as ThemeStatuses)
         setTheme(localStorage.getItem('theme') as ThemeStatuses)
     }, [])
