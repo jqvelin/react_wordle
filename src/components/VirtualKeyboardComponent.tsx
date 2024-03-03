@@ -18,7 +18,7 @@ const VirtualKeyboardComponent: FC<VirtualKeyboardComponentProps> = ({handleVirt
                     )}
                     {index === keyboardKeys.length - 1 &&
                         <>
-                            <div className="virtual-keyboard__button special" style={{fontSize: '48px'}}>
+                            <div className="virtual-keyboard__button special">
                             ⌫
                             </div>
                             <div className="virtual-keyboard__button special">

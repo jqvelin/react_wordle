@@ -36,7 +36,6 @@ export class MainGameBoard {
 
     riddleWord(){
         this.riddledWord = this.words[Math.floor(Math.random() * (this.words.length - 1))]
-        console.log(this.riddledWord)
     }
 
     isAllowedLetter(letter: string) {

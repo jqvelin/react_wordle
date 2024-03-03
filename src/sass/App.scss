@@ -106,7 +106,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 180px;
+        width: 160px;
         div {
             cursor: pointer;
             width: 3rem;
@@ -164,7 +164,7 @@ footer {
     @include center;
     justify-content: space-between;
     height: 10vh;
-    width: 90vw;
+    width: 95vw;
 }
 
 .theme-switcher {
@@ -172,7 +172,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 130px;
+    width: 120px;
     cursor: pointer;
     p {
         margin-right: 0.7rem;
@@ -181,7 +181,7 @@ footer {
         position: relative;
         border: 1px $unknown-letter-color solid;
         border-radius: 2rem;
-        width: 80px;
+        width: 70px;
         height: 40px;
         overflow: hidden;
         right: 0;
@@ -224,11 +224,35 @@ footer {
     .letter-boxes-row {
         gap: 2px;
     }
+
+    .select-difficulty{
+        &__row {
+            width: 140px;
+            div {
+                width: 2.7rem
+            }
+        }
+        
+    }
 };
 
 /* For Mobile Landscape View */
-@media screen and (max-device-width: 640px) and (orientation: landscape) {
+@media screen and (max-device-width: 720px) and (orientation: landscape) {
     .modal-content {
         height: 100%;
+    }
+    .title {
+        font-size: 24px;
+    }
+    .letter-box {
+        width: $letter-box-mobile-size;
+        font-size: $letter-box-mobile-font-size;
+    }
+    main {
+        gap: 2px;
+    }
+
+    .letter-boxes-row {
+        gap: 2px;
     }
 }

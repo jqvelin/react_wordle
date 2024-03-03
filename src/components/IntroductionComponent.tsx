@@ -10,6 +10,7 @@ interface IntroductionComponentProps {
 const IntroductionComponent: FC<IntroductionComponentProps> = ({handleGameStart, setDifficulty, difficulty}) => {
 
     useEffect(() => {
+        if (!localStorage.getItem('difficulty')) return
         setDifficulty(Number(localStorage.getItem('difficulty')))
     }, [])
 
@@ -38,7 +39,7 @@ const IntroductionComponent: FC<IntroductionComponentProps> = ({handleGameStart,
                 </div>
                 <p>Для начала игры выберите сложность:</p>
                 <DifficultySelectorComponent difficulty={difficulty} setDifficulty={setDifficulty} />
-                <button onClick={() => handleGameStart()}>Играть</button>
+                <button onClick={handleGameStart}>Играть</button>
             </div>
         </div>
     );
