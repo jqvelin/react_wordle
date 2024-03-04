@@ -137,9 +137,10 @@ main {
     flex-direction: column;
     gap: 2px;
     font-size: 24px;
+    margin: 4px 0;
     .special {
         width: $virtual-keyboard-special-char-width;
-        height: 28px;
+        height: 30px;
         font-size: 1.2em;
     }
     &__row {
@@ -212,6 +213,11 @@ footer {
 @media screen and (max-device-width: 640px) {
     .title {
         font-size: 24px;
+        &.bottom-border{
+            &::after {
+                bottom: -2px;
+            }
+        }
     }
     .letter-box {
         width: $letter-box-mobile-size;
@@ -243,6 +249,11 @@ footer {
     }
     .title {
         font-size: 24px;
+        &.bottom-border{
+            &::after{
+                all: initial;
+            }
+        }
     }
     .letter-box {
         width: $letter-box-mobile-size;

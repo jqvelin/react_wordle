@@ -4,6 +4,8 @@ import LetterBoxComponent from './LetterBoxComponent';
 import { LetterBoxStatuses } from '../models/statuses/LetterBoxStatuses';
 import { GameStatuses } from '../models/statuses/GameStatuses';
 import VirtualKeyboardComponent from './VirtualKeyboardComponent';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 interface MainGameComponentProps {
     gameBoard: MainGameBoard
@@ -46,8 +48,6 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
         } else if (inputLetter === 'ENTER'){
             if (currentLetter.current !== gameBoard.riddledWord.length) return
             calculateResult(currentWord.current)
-            currentWord.current++
-            currentLetter.current = 0
         }
         else return
         updateBoard()
@@ -70,16 +70,20 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
         } else if (inputLetter === '⏎'){
             if (currentLetter.current !== gameBoard.riddledWord.length) return
             calculateResult(currentWord.current)
-            currentWord.current++
-            currentLetter.current = 0
         }
         else return
         updateBoard()
     }
 
-    function calculateResult(currentWord: number){
+    function calculateResult(currentWordOrder: number){
+        let uniteWord = ''
+        gameBoard.letterBoxes[currentWordOrder].forEach(letterBox => uniteWord += letterBox.letter)
+        if (!gameBoard.words.includes(uniteWord)) {
+            toast('Слова нет в словаре!')
+            return
+        }
         for (let x = 0; x < gameBoard.riddledWord.length; x++){
-            const currentLetterBox = gameBoard.getLetterBox(x, currentWord)
+            const currentLetterBox = gameBoard.getLetterBox(x, currentWordOrder)
             const currentRiddledWordLetters = gameBoard.riddledWord.split('')
             if (currentLetterBox.letter === currentRiddledWordLetters[x]){
                 currentLetterBox.status = LetterBoxStatuses.CORRECT
@@ -89,15 +93,18 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
                 currentLetterBox.status = LetterBoxStatuses.WRONG
             }
         }
-        if (gameBoard.letterBoxes[currentWord].filter(letterBox => letterBox.status === LetterBoxStatuses.CORRECT).length === gameBoard.riddledWord.length){
+        if (gameBoard.letterBoxes[currentWordOrder].filter(letterBox => letterBox.status === LetterBoxStatuses.CORRECT).length === gameBoard.riddledWord.length){
             setGameStatus(GameStatuses.GAME_WON)
-        } else if (currentWord === 5){
+        } else if (currentWordOrder === 5){
             setGameStatus(GameStatuses.GAME_LOST)
         }
+        currentWord.current++
+        currentLetter.current = 0
     }
 
     return (
         <>
+        <ToastContainer hideProgressBar={true} theme={document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'}/>
         <main>
             {gameBoard.letterBoxes.map((row, index) => 
                 <div key={index} className="letter-boxes-row">
