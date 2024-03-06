@@ -9,6 +9,7 @@ import DifficultySelectorComponent from './components/DifficultySelectorComponen
 import MainGameComponent from './components/MainGameComponent';
 import { MainGameBoard } from './models/MainGameBoard';
 import GameOutcomeComponent from './components/GameOutcomeComponent';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const [gameStatus, setGameStatus] = useState<GameStatuses>(GameStatuses.FIRST_LAUNCH)
@@ -30,9 +31,12 @@ const App = () => {
     setGameStatus(GameStatuses.GAME_RUNNING)
   }
 
+  // toast() function is located at the MainGameComponent
+
   return (
     <div className="main-layout">
       <TitleComponent title="Wordle" bottomBorder/>
+      <ToastContainer hideProgressBar={true} theme={document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'}/>
       {gameStatus === GameStatuses.FIRST_LAUNCH && <IntroductionComponent handleGameStart={handleGameStart} difficulty={difficulty} setDifficulty={setDifficulty}/>}
       {gameStatus === GameStatuses.GAME_RUNNING && <MainGameComponent gameBoard={gameBoard} setGameBoard={setGameBoard} setGameStatus={setGameStatus}/>}
       {(gameStatus === GameStatuses.GAME_WON || gameStatus === GameStatuses.GAME_LOST) && <GameOutcomeComponent gameBoard={gameBoard} gameStatus={gameStatus} restartGame={restartGame} setGameStatus={setGameStatus}/>}

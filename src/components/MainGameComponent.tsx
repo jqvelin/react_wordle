@@ -4,7 +4,7 @@ import LetterBoxComponent from './LetterBoxComponent';
 import { LetterBoxStatuses } from '../models/statuses/LetterBoxStatuses';
 import { GameStatuses } from '../models/statuses/GameStatuses';
 import VirtualKeyboardComponent from './VirtualKeyboardComponent';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 interface MainGameComponentProps {
@@ -93,6 +93,15 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
                 currentLetterBox.status = LetterBoxStatuses.WRONG
             }
         }
+
+        // Removing unnecessary yellow highlighting of letters which have already been guessed
+        const noDuplicatesLetters = new Set(uniteWord.split(''))
+        noDuplicatesLetters.forEach(letter => {
+            if (gameBoard.getAllIndices(letter).length === gameBoard.letterBoxes[currentWordOrder].filter(letterBox => letterBox.letter === letter && letterBox.status === LetterBoxStatuses.CORRECT).length){
+                gameBoard.letterBoxes[currentWordOrder].map(letterBox => letterBox.letter === letter && letterBox.status === LetterBoxStatuses.GUESSED ? letterBox.status = LetterBoxStatuses.WRONG : letterBox)
+            }
+        })
+        
         if (gameBoard.letterBoxes[currentWordOrder].filter(letterBox => letterBox.status === LetterBoxStatuses.CORRECT).length === gameBoard.riddledWord.length){
             setGameStatus(GameStatuses.GAME_WON)
         } else if (currentWordOrder === 5){
@@ -104,7 +113,6 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
 
     return (
         <>
-        <ToastContainer hideProgressBar={true} theme={document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'}/>
         <main>
             {gameBoard.letterBoxes.map((row, index) => 
                 <div key={index} className="letter-boxes-row">
