@@ -1,7 +1,6 @@
 import { LetterBox } from "./LetterBox"
 import { allowedKeys } from "./db/AllowedKeys"
 import { fiveLetterWords, fourLetterWords, sixLetterWords } from "./db/WordsDB"
-import { LetterBoxStatuses } from "./statuses/LetterBoxStatuses"
 
 export class MainGameBoard {
     letterBoxQty: number
@@ -9,6 +8,7 @@ export class MainGameBoard {
     words: string[] = []
     riddledWord: string = ''
     allowedKeys: string[] = allowedKeys
+    usedWords: string[] = []
     constructor(letterBoxQty: number){
         this.letterBoxQty = letterBoxQty
         switch(letterBoxQty){
@@ -35,7 +35,12 @@ export class MainGameBoard {
     }
 
     riddleWord(){
+        let randomIndex: number
+        do {
+            randomIndex = Math.floor(Math.random() * (this.words.length - 1))
+        } while (this.usedWords.find(word => word === this.words[randomIndex]))
         this.riddledWord = this.words[Math.floor(Math.random() * (this.words.length - 1))]
+        this.usedWords.push(this.riddledWord)
     }
 
     isAllowedLetter(letter: string) {

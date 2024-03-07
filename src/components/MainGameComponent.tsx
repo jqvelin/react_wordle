@@ -13,15 +13,16 @@ interface MainGameComponentProps {
     setGameStatus: (nextStatus: GameStatuses) => void
 }
 
+const showVirtualKeyboard = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
 const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard, setGameStatus}) => {
-    const showVirtualKeyboard = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     const currentLetter = useRef(0)
     const currentWord = useRef(0)
 
     useEffect(() => {
         currentLetter.current = 0
         currentWord.current = 0
-    }, [gameBoard.riddledWord.length])
+    }, [gameBoard.riddledWord])
     
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown)
@@ -76,8 +77,7 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
     }
 
     function calculateResult(currentWordOrder: number){
-        let uniteWord = ''
-        gameBoard.letterBoxes[currentWordOrder].forEach(letterBox => uniteWord += letterBox.letter)
+        const uniteWord = gameBoard.letterBoxes[currentWordOrder].reduce((acc, letterBox) => acc += letterBox.letter, '')
         if (!gameBoard.words.includes(uniteWord)) {
             toast('Слова нет в словаре!')
             return
@@ -102,7 +102,7 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
             }
         })
         
-        if (gameBoard.letterBoxes[currentWordOrder].filter(letterBox => letterBox.status === LetterBoxStatuses.CORRECT).length === gameBoard.riddledWord.length){
+        if (gameBoard.letterBoxes[currentWordOrder].every(letterBox => letterBox.status === LetterBoxStatuses.CORRECT)){
             setGameStatus(GameStatuses.GAME_WON)
         } else if (currentWordOrder === 5){
             setGameStatus(GameStatuses.GAME_LOST)
