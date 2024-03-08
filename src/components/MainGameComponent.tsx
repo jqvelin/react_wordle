@@ -22,7 +22,7 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
     useEffect(() => {
         currentLetter.current = 0
         currentWord.current = 0
-    }, [gameBoard.riddledWord])
+    }, [gameBoard.riddledWord.length])
     
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown)
@@ -104,8 +104,12 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
         
         if (gameBoard.letterBoxes[currentWordOrder].every(letterBox => letterBox.status === LetterBoxStatuses.CORRECT)){
             setGameStatus(GameStatuses.GAME_WON)
+            currentLetter.current = 0
+            currentWord.current = 0
         } else if (currentWordOrder === 5){
             setGameStatus(GameStatuses.GAME_LOST)
+            currentLetter.current = 0
+            currentWord.current = 0
         }
         currentWord.current++
         currentLetter.current = 0

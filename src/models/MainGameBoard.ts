@@ -35,12 +35,7 @@ export class MainGameBoard {
     }
 
     riddleWord(){
-        let randomIndex: number
-        do {
-            randomIndex = Math.floor(Math.random() * (this.words.length - 1))
-        } while (this.usedWords.find(word => word === this.words[randomIndex]))
-        this.riddledWord = this.words[Math.floor(Math.random() * (this.words.length - 1))]
-        this.usedWords.push(this.riddledWord)
+        this.riddledWord = this.words[Math.floor(Math.random() * this.words.length)]
     }
 
     isAllowedLetter(letter: string) {
