@@ -31,8 +31,6 @@ const App = () => {
     setGameStatus(GameStatuses.GAME_RUNNING)
   }
 
-  // toast() function is located at the MainGameComponent
-
   return (
     <div className="main-layout">
       <TitleComponent title="Wordle" bottomBorder/>

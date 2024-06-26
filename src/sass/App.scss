@@ -187,21 +187,24 @@ footer {
         overflow: hidden;
         right: 0;
         .sun-icon, .moon-icon {
+            top: 150%;
             font-size: 1.5rem;
             position: absolute;
-            transition: top 0.3s ease-in-out;
+            transition: top 0.3s ease-in-out, bottom 0.3s ease-in-out;
         }
 
         .sun-icon {
-            top: var(--sun-position);
             left: 10%;
             transform: translateY(-50%);
         }
 
         .moon-icon {
-            top: var(--moon-position);
             right: 10%;
             transform: translateY(-50%);
+        }
+
+        .icon-up {
+            top: 50%;
         }
 
         input {

@@ -8,7 +8,6 @@ export class MainGameBoard {
     words: string[] = []
     riddledWord: string = ''
     allowedKeys: string[] = allowedKeys
-    usedWords: string[] = []
     constructor(letterBoxQty: number){
         this.letterBoxQty = letterBoxQty
         switch(letterBoxQty){
@@ -45,7 +44,7 @@ export class MainGameBoard {
 
     getAllIndices(neededValue: any) {
         let indices = [], i = -1;
-        while ((i = this.riddledWord.split('').indexOf(neededValue, i+1)) != -1){
+        while ((i = this.riddledWord.split('').indexOf(neededValue, i+1)) !== -1){
             indices.push(i);
         }
         return indices;

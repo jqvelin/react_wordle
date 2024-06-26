@@ -23,9 +23,8 @@ const ThemeSwitcherComponent = () => {
         <div className="theme-switcher" onClick={handleChangeTheme}>
             <p>{theme === ThemeStatuses.LIGHT ? 'Light' : 'Dark'}</p>
             <div className="theme-switcher__controls">
-                <FontAwesomeIcon className="sun-icon" icon={faCloudSun} />
-                <FontAwesomeIcon className="moon-icon" icon={faMoon} />
-                <input type="checkbox" onChange={handleChangeTheme}/>
+                <FontAwesomeIcon className={`sun-icon ${theme === ThemeStatuses.LIGHT ? 'icon-up' : 'icon-hidden'}`} icon={faCloudSun} />
+                <FontAwesomeIcon className={`moon-icon ${theme === ThemeStatuses.DARK ? 'icon-up' : 'icon-hidden'}`} icon={faMoon} />
             </div>
         </div>
     );
