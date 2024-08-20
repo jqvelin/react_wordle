@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useRef, useState} from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { MainGameBoard } from '../models/MainGameBoard';
 import LetterBoxComponent from './LetterBoxComponent';
 import { LetterBoxStatuses } from '../models/statuses/LetterBoxStatuses';
@@ -54,7 +54,7 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
         updateBoard()
     }
 
-    function handleVirtualKeyboard(e: React.PointerEvent){
+    const handleVirtualKeyboard = useCallback((e: React.PointerEvent) => {
         const element = e.target as HTMLElement
         if (!element || !element.textContent) return
         const inputLetter = element.textContent.toUpperCase()
@@ -74,7 +74,7 @@ const MainGameComponent: FC<MainGameComponentProps> = ({gameBoard, setGameBoard,
         }
         else return
         updateBoard()
-    }
+    }, [])
 
     function calculateResult(currentWordOrder: number){
         const uniteWord = gameBoard.letterBoxes[currentWordOrder].reduce((acc, letterBox) => acc += letterBox.letter, '')
